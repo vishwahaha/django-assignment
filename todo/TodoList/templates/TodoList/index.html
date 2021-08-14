@@ -1,0 +1,11 @@
+{% if todolists %}
+
+    <ul>
+        {% for todolist in todolists %}
+        <li><a href={% url 'TodoList:detail' todolist.id %}>{{todolist.list_name}}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+
+<button><a href="{% url 'TodoList:create_list' %}">Create new list</a></button>

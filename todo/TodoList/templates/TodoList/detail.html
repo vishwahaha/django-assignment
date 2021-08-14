@@ -1,0 +1,59 @@
+{% if todoList %}
+
+<ol>
+  <h1>{{ todoList.list_name }}</h1>
+  {% if itemList %} {% for item in itemList %}
+  <li>
+    <h2>{{ item.desc }}</h2>
+    <ul>
+      <li>
+        {% if item.isDone %}
+        Finished
+        {% else %}
+        Pending
+        {% endif %}
+      </li>
+
+      <li>Due date : <strong>{{ item.due_date }}</strong></li>
+
+      <li>
+        <form
+          action="{% url 'TodoList:delete_item' todoList.id item.id %}"
+          method="POST"
+        >
+          {% csrf_token %}
+          <input type="submit" value="Delete" />
+        </form>
+      </li>
+
+      <li>
+        <button>
+          <a href="{% url 'TodoList:update_item' todoList.id item.id %}"
+            >Edit</a
+          >
+        </button>
+      </li>
+
+    </ul>
+  </li>
+  {% endfor %} {% endif %}
+</ol>
+
+{% endif %}
+
+<form action="{% url 'TodoList:detail' todoList.id %}" method="POST">
+  {% csrf_token %}
+  <fieldset>
+    <h1>Add an item</h1>
+    <input type="text" name="addItem" id="addItem" />
+    <label for="duedate">Due date:</label>
+    <input type="datetime-local" id="duedate" name="duedate" required />
+    <input type="submit" />
+  </fieldset>
+</form>
+
+<button><a href="{% url 'TodoList:index' %}">All lists</a></button>
+<form action="{% url 'TodoList:delete_list' todoList.id %}" method="POST">
+{% csrf_token %}
+  <input type="submit" value="Delete this list">
+</form>

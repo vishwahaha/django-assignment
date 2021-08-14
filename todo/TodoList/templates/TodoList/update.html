@@ -1,0 +1,17 @@
+{% if todoList %}
+{% if item %}
+<form action="{% url 'TodoList:update_item' todoList.id item.id %}" method="POST" id="updateForm">
+    {% csrf_token %}
+    <fieldset>
+        <textarea form="updateForm" name="updatedItem" id="updatedItem">{{ item.desc }}</textarea><br>
+
+        <label for="isDone">Finished?</label>
+        <input type="checkbox" name="isDone" id="isDone"><br>
+        
+        <label for="duedate">Due date:</label>
+        <input type="datetime-local" id="duedate" name="duedate" required/><br>
+        <input type="submit" value="Update">
+    </fieldset>
+</form>
+{% endif %}
+{% endif %}
